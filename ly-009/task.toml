@@ -1,0 +1,27 @@
+schema_version = "1.3"
+
+[task]
+name = "local/warehouse-shift-compact-recovery"
+description = "Recover compact warehouse crew routes, family assignments, staged events, and counterfactual strategy throughput from anonymous hourly aggregates."
+authors = [{ name = "local-author" }]
+keywords = ["aggregate-recovery", "bipartite-matching", "canonical-events", "counterfactual-simulation", "idempotent-ledger"]
+
+[agent]
+timeout_sec = 3600
+
+[environment]
+build_timeout_sec = 600
+cpus = 1
+memory_mb = 2048
+storage_mb = 10240
+gpus = 0
+allow_internet = true
+
+[verifier]
+timeout_sec = 120
+
+[metadata]
+difficulty = "hard"
+category = "simulation-modeling"
+tags = ["aggregate-observation", "route-recovery", "canonical-events", "counterfactual-simulation", "pytest", "stdlib"]
+expert_time_estimate = "30m"

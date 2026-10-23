@@ -1,0 +1,174 @@
+{
+  "gate_tests": [
+    "test_outputs.py::test_gate_recovery_and_counterfactual",
+    "test_outputs.py::test_gate_idempotent_ledger"
+  ],
+  "schema_version": 1,
+  "tests": {
+    "test_outputs.py::test_resource_role_split_is_enforced": {
+      "priority": "boundary",
+      "rationale": "资源角色数量错误会让入口与共享资源的路线恢复失去定义。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_crew_partition_is_exact": {
+      "priority": "boundary",
+      "rationale": "作业组必须精确划分八项作业，否则访问总数无法归属到路线。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_hourly_shape_is_exact": {
+      "priority": "boundary",
+      "rationale": "固定三小时观测是当前紧凑恢复模型的公开规模和闭合边界。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_route_recovery_uses_resource_totals": {
+      "priority": "core",
+      "rationale": "资源访问总数是恢复四条未知路线的首要聚合约束。",
+      "weight": 0.22
+    },
+    "test_outputs.py::test_family_assignment_follows_sorted_routes": {
+      "priority": "core",
+      "rationale": "路线到作业族的规范归属决定后续策略优先级和结果排序。",
+      "weight": 0.12
+    },
+    "test_outputs.py::test_each_job_has_two_contiguous_stages": {
+      "priority": "supporting",
+      "rationale": "每项作业两阶段连续执行是事件恢复和资源占用的结构基础。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_events_are_sorted_by_hour_resource_and_job": {
+      "priority": "supporting",
+      "rationale": "稳定事件顺序保证复核人员能够逐小时对照原始资源集合。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_release_hour_is_respected": {
+      "priority": "recovery",
+      "rationale": "作业不能在释放时间前进入路线，否则恢复结果会制造过早开工。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_transition_support_must_close": {
+      "priority": "recovery",
+      "rationale": "已列转移集合不闭合时必须拒收，不能猜测缺失的入口共享配对。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_completed_counts_must_close": {
+      "priority": "recovery",
+      "rationale": "完成计数不一致会破坏事件阶段和每小时资源负载的联合闭合。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_counterfactual_uses_recovered_routes": {
+      "priority": "core",
+      "rationale": "策略完成数必须消费恢复路线，才能形成可信的反事实吞吐。",
+      "weight": 0.12
+    },
+    "test_outputs.py::test_strategy_window_end_is_inclusive": {
+      "priority": "boundary",
+      "rationale": "窗口末端完成是否计入会直接改变策略完成数和吞吐结算。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_throughput_uses_window_ratio_and_half_up": {
+      "priority": "boundary",
+      "rationale": "吞吐量必须按完成数除以窗口长度并采用公开的三位小数口径。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_result_layers_have_exact_keys": {
+      "priority": "schema",
+      "rationale": "精确结果键集合保证下游复核程序不会误读内部状态字段。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_result_bytes_are_canonical_json": {
+      "priority": "supporting",
+      "rationale": "规范结果字节是台账摘要和同输入幂等比较的共同基础。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_input_digest_uses_original_bytes": {
+      "priority": "supporting",
+      "rationale": "原始字节摘要能区分语义相近但现场文件不同的复核输入。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_minimum_scene_completes": {
+      "priority": "supporting",
+      "rationale": "最小快照证明恢复算法没有绑定默认班次的标识或数组顺序。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_maximum_scene_completes_within_public_limit": {
+      "priority": "supporting",
+      "rationale": "最大快照证明公开规模可以在五秒上限内完成恢复和发布。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_upper_bound_route_search_is_not_permutation_enumeration": {
+      "priority": "core",
+      "rationale": "上界现场要求以约束闭合路线，不能依赖资源与作业组的全排列。",
+      "weight": 0.12
+    },
+    "test_outputs.py::test_success_channel_is_exact": {
+      "priority": "supporting",
+      "rationale": "成功回执通道稳定，自动复核脚本才能可靠识别完成状态。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_refusal_channel_is_exact": {
+      "priority": "supporting",
+      "rationale": "统一拒收通道让值班人员能够区分业务拒绝和进程崩溃。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_absent_root_key_is_refused": {
+      "priority": "boundary",
+      "rationale": "根层缺键必须在恢复前拒绝，避免默认值掩盖现场表不完整。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_extra_nested_key_is_bad_input": {
+      "priority": "boundary",
+      "rationale": "嵌套额外键可能改变作业语义，不能静默进入路线恢复。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_duplicate_json_key_is_bad_input": {
+      "priority": "boundary",
+      "rationale": "重复键会触发最后值覆盖，必须按输入损坏停止处理。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_boolean_integer_is_bad_input": {
+      "priority": "boundary",
+      "rationale": "布尔值不能被当作小时整数，否则释放门控会发生类型漂移。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_unknown_resource_is_recovery_infeasible": {
+      "priority": "recovery",
+      "rationale": "小时表出现未登记资源时无法闭合路线，必须停止恢复。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_validation_failure_preserves_old_outputs": {
+      "priority": "recovery",
+      "rationale": "解析失败不得改写已经留档的结果和复核账字节。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_same_run_with_changed_input_is_conflict": {
+      "priority": "recovery",
+      "rationale": "同一运行号更换输入时必须冲突，防止历史现场被悄悄覆盖。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_broken_ledger_is_corrupt": {
+      "priority": "recovery",
+      "rationale": "断链台账不得继续追加，保证跨运行摘要链仍可审计。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_duplicate_ledger_key_is_corrupt": {
+      "priority": "recovery",
+      "rationale": "台账重复键必须按损坏处理，避免覆盖后伪造链尾摘要。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_job_count_above_upper_bound_is_refused": {
+      "priority": "boundary",
+      "rationale": "作业数超过公开上限会破坏固定两小时阶段和资源闭合。",
+      "weight": 0.015
+    },
+    "test_outputs.py::test_duplicate_transition_support_is_bad_input": {
+      "priority": "boundary",
+      "rationale": "重复转移四元组会重复累计支撑并改变路线配对结果。",
+      "weight": 0.015
+    }
+  },
+  "weight_policy": {
+    "basis": "business_priority",
+    "core_min_share": 0.5,
+    "version": 1
+  }
+}
